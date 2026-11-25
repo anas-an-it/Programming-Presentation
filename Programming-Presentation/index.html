@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="عرض تقديمي مبسّط عن البرمجة من الفكرة الأولى إلى أول سطر كود.">
+  <title>البرمجة | عرض تقديمي</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="deck" id="deck">
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>
+        <span>البرمجة</span>
+      </div>
+      <button class="pdf-btn" id="pdfBtn" type="button" title="حفظ العرض كملف PDF">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v3h16v-3"/></svg>
+        <span>حفظ PDF</span>
+      </button>
+    </header>
+
+    <main class="slides" id="slides">
+
+      <!-- 1 -->
+      <section class="slide slide--cover is-active" data-title="الغلاف">
+        <div class="slide-inner cover-grid">
+          <div class="cover-copy">
+            <p class="eyebrow">دليل مبسّط في 12 محطة</p>
+            <h1 class="cover-title">البرمجة<span>لغة المستقبل</span></h1>
+            <p class="lead">كيف نُعلّم الحاسوب أن يفكّر؟ رحلة قصيرة من الفكرة الأولى إلى أول سطر من الكود.</p>
+            <div class="actions">
+              <button class="primary-btn js-next" type="button">ابدأ الرحلة <span aria-hidden="true">←</span></button>
+            </div>
+            <div class="chips"><span>لا خبرة مطلوبة</span><span>أمثلة عملية</span></div>
+          </div>
+          <div class="cover-visual">
+            <img src="assets/hero.svg" alt="رسم ثلاثي الأبعاد لمكعب يحمل رموز الأكواد" class="hero-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="slide" data-title="ما هي البرمجة؟">
+        <div class="slide-inner">
+          <p class="eyebrow">01 · الفكرة</p>
+          <h2>ما هي البرمجة؟</h2>
+          <p class="lead">هي كتابة تعليمات واضحة ومرتّبة ينفّذها الحاسوب لأداء مهمة معيّنة.</p>
+          <div class="recipe-flow">
+            <div class="depth-card"><span class="step-tag">المكوّنات</span><strong>البيانات</strong><small>الأرقام والنصوص</small></div>
+            <span class="flow-arrow" aria-hidden="true">←</span>
+            <div class="depth-card"><span class="step-tag">الخطوات</span><strong>الأوامر</strong><small>ما يجب فعله</small></div>
+            <span class="flow-arrow" aria-hidden="true">←</span>
+            <div class="depth-card depth-card--accent"><span class="step-tag">النتيجة</span><strong>برنامج</strong><small>يعمل كما تريد</small></div>
+          </div>
+          <p class="note">تخيّلها كوصفة طبخ: الحاسوب لا يخمّن، بل ينفّذ ما تكتبه بدقّة.</p>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="slide" data-title="لغات البرمجة">
+        <div class="slide-inner">
+          <p class="eyebrow">02 · الأدوات</p>
+          <h2>لغات البرمجة</h2>
+          <p class="lead">كل لغة أداة لمهمة؛ اختر ما يناسب هدفك.</p>
+          <div class="lang-grid">
+            <article class="lang-card"><span class="lang-badge badge-py">Py</span><h3>Python</h3><p>الذكاء الاصطناعي وتحليل البيانات</p><code>سهل التعلّم</code></article>
+            <article class="lang-card"><span class="lang-badge badge-js">JS</span><h3>JavaScript</h3><p>المواقع والتطبيقات التفاعلية</p><code>لغة الويب</code></article>
+            <article class="lang-card"><span class="lang-badge badge-java">J</span><h3>Java</h3><p>تطبيقات أندرويد والأنظمة الكبيرة</p><code>موثوقة</code></article>
+            <article class="lang-card"><span class="lang-badge badge-cpp">C++</span><h3>C++</h3><p>الألعاب والبرامج عالية الأداء</p><code>سريعة</code></article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section class="slide" data-title="كيف يفكر المبرمج؟">
+        <div class="slide-inner">
+          <p class="eyebrow">03 · طريقة التفكير</p>
+          <h2>كيف يفكر المبرمج؟</h2>
+          <p class="lead">المشكلة لا تُحل دفعة واحدة، بل تُقسّم إلى خطوات صغيرة.</p>
+          <div class="steps-row">
+            <div class="step-card"><span class="step-num">1</span><h3>افهم</h3><p>حدّد المطلوب بدقّة</p></div>
+            <div class="step-card"><span class="step-num">2</span><h3>قسّم</h3><p>اجزئه إلى مهام</p></div>
+            <div class="step-card"><span class="step-num">3</span><h3>اكتب</h3><p>حوّل الحل إلى كود</p></div>
+            <div class="step-card"><span class="step-num">4</span><h3>جرّب</h3><p>اختبر وأصلح الخطأ</p></div>
+          </div>
+          <p class="note">هذه هي «الخوارزمية»: مجموعة خطوات مرتّبة للوصول إلى نتيجة.</p>
+        </div>
+      </section>
+
+      <!-- 5 -->
+      <section class="slide" data-title="المتغيرات والبيانات">
+        <div class="slide-inner split">
+          <div class="split-copy">
+            <p class="eyebrow">04 · الأساسيات</p>
+            <h2>المتغيرات والبيانات</h2>
+            <p class="lead">المتغير صندوق صغير يحفظ قيمة لتستخدمها لاحقاً.</p>
+            <pre class="code" dir="ltr"><code>name  = "سارة"
+age   = 25
+print(name, age)</code></pre>
+            <p class="note">غيّر القيمة في مكان واحد، ويتحدّث كل ما يستخدمها.</p>
+          </div>
+          <div class="cube-scene" aria-hidden="true">
+            <div class="cube">
+              <div class="face face--front">name</div>
+              <div class="face face--back">25</div>
+              <div class="face face--right">{}</div>
+              <div class="face face--left">&lt;/&gt;</div>
+              <div class="face face--top">data</div>
+              <div class="face face--bottom">01</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6 -->
+      <section class="slide" data-title="القرار والتكرار">
+        <div class="slide-inner">
+          <p class="eyebrow">05 · التحكّم</p>
+          <h2>القرار والتكرار</h2>
+          <p class="lead">الشرط يختار طريقاً، والحلقة تعمل مرة بعد مرة.</p>
+          <div class="code-grid">
+            <article class="code-card">
+              <div class="code-head"><span class="dot"></span><strong>الشرط · if</strong></div>
+              <pre class="code" dir="ltr"><code>if age &gt;= 18:
+    print("بالغ")
+else:
+    print("صغير")</code></pre>
+              <p>يُنفّذ اختياراً واحداً حسب الشرط.</p>
+            </article>
+            <article class="code-card">
+              <div class="code-head"><span class="dot"></span><strong>الحلقة · for</strong></div>
+              <pre class="code" dir="ltr"><code>for i in range(3):
+    print("مرحباً")</code></pre>
+              <p>يكرّر نفس العمل ثلاث مرات دون تكرار الكتابة.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="slide" data-title="الدوال">
+        <div class="slide-inner split">
+          <div class="split-copy">
+            <p class="eyebrow">06 · التنظيم</p>
+            <h2>الدوال (Functions)</h2>
+            <p class="lead">كتلة كود تُسمّيها مرة، وتستخدمها كلما احتجتها.</p>
+            <pre class="code" dir="ltr"><code>def greet(name):
+    return "مرحباً " + name
+
+print(greet("سارة"))</code></pre>
+          </div>
+          <div class="function-visual">
+            <div class="fn-orbit" aria-hidden="true"><span>نداء</span><span>تنفيذ</span><span>نتيجة</span></div>
+            <div class="fn-core">دالة</div>
+            <p>نفس الفكرة · كود أقل · صيانة أسهل</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section class="slide" data-title="من أين أبدأ؟">
+        <div class="slide-inner">
+          <p class="eyebrow">07 · خريطة الطريق</p>
+          <h2>من أين أبدأ؟</h2>
+          <p class="lead">مسار بسيط في أربع محطات، لا تحتاج لترتيب مثالي.</p>
+          <div class="journey-grid">
+            <div class="journey-list">
+              <div class="journey-item"><span>1</span><div><strong>HTML &amp; CSS</strong><p>بناء الصفحة وشكلها</p></div></div>
+              <div class="journey-item"><span>2</span><div><strong>JavaScript</strong><p>إضافة التفاعل والحركة</p></div></div>
+              <div class="journey-item"><span>3</span><div><strong>Python</strong><p>المنطق وتحليل البيانات</p></div></div>
+              <div class="journey-item"><span>4</span><div><strong>مشروعك الأول</strong><p>طبّق ما تعلّمته</p></div></div>
+            </div>
+            <img src="assets/path.svg" alt="رسم ثلاثي الأبعاد لدرجات تصعد نحو الهدف" class="journey-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- 9 -->
+      <section class="slide" data-title="أدوات المبرمج">
+        <div class="slide-inner">
+          <p class="eyebrow">08 · بيئة العمل</p>
+          <h2>أدوات المبرمج</h2>
+          <p class="lead">أربع أدوات تكفي للبداية، كلها مجانية.</p>
+          <div class="tool-grid">
+            <article class="tool-card">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="4"/><path d="M5 17h38M13 13h2m4 0h2m4 0h2M14 26l6 5-6 5m10 0h9"/></svg>
+              <h3>محرّر الأكواد</h3><p>حيث تكتب وتنظّم ملفاتك (مثل VS Code).</p>
+            </article>
+            <article class="tool-card">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="16"/><path d="M8 24h32M24 8c5 5 7 10 7 16s-2 11-7 16c-5-5-7-10-7-16s2-11 7-16Z"/></svg>
+              <h3>المتصفّح</h3><p>لترى نتيجة عملك فوراً وتختبرها.</p>
+            </article>
+            <article class="tool-card">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="10" width="38" height="28" rx="4"/><path d="m13 19 5 5-5 5m10 1h10"/></svg>
+              <h3>الطرفية</h3><p>أوامر سريعة لتشغيل البرامج.</p>
+            </article>
+            <article class="tool-card">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="12" cy="13" r="5"/><circle cx="36" cy="13" r="5"/><circle cx="24" cy="37" r="5"/><path d="M14 17l8 15m12-15-8 15M17 13h14"/></svg>
+              <h3>Git</h3><p>يحفظ نسخ عملك ويساعدك على التراجع.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section class="slide" data-title="البرمجة حولنا">
+        <div class="slide-inner journey-grid">
+          <div>
+            <p class="eyebrow">09 · الواقع</p>
+            <h2>البرمجة حولنا</h2>
+            <p class="lead">كل تطبيق تستخدمه هو كود يعمل خلف الشاشة.</p>
+            <div class="fact-grid">
+              <span class="fact">تطبيقات الهاتف</span><span class="fact">المواقع</span>
+              <span class="fact">الذكاء الاصطناعي</span><span class="fact">الألعاب</span>
+            </div>
+            <p class="note">البرمجة ليست مهنة فقط، بل طريقة لحل المشكلات اليومية.</p>
+          </div>
+          <img src="assets/devices.svg" alt="رسم ثلاثي الأبعاد لهاتف ومتصفح وشريحة ذكاء اصطناعي" class="devices-img">
+        </div>
+      </section>
+
+      <!-- 11 -->
+      <section class="slide" data-title="نصائح للنجاح">
+        <div class="slide-inner">
+          <p class="eyebrow">10 · نصائح</p>
+          <h2>خمس نصائح سريعة</h2>
+          <div class="tips-grid">
+            <div class="tip"><span class="tip-mark">✦</span><p>تدرّب قليلاً كل يوم، وإن كانت 15 دقيقة.</p></div>
+            <div class="tip"><span class="tip-mark">✦</span><p>ابدأ بمشروع صغير ينتهي في يومين.</p></div>
+            <div class="tip"><span class="tip-mark">✦</span><p>اقرأ أكواد الآخرين وتعلّم من أسلوبهم.</p></div>
+            <div class="tip"><span class="tip-mark">✦</span><p>لا تخف من الأخطاء؛ هي جزء من التعلّم.</p></div>
+            <div class="tip tip--wide"><span class="tip-mark">✦</span><p>اسأل مبكراً، وشارك عملك مع غيرك.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 12 -->
+      <section class="slide slide--end" data-title="الختام">
+        <div class="slide-inner end-inner">
+          <div class="end-glow" aria-hidden="true"></div>
+          <p class="eyebrow">الخلاصة</p>
+          <h2>ابدأ بسطر واحد</h2>
+          <p class="lead">لا تحتاج أن تعرف كل شيء؛ يكفي أن تبدأ وتستمر.</p>
+          <div class="actions actions--center">
+            <button class="primary-btn" id="pdfBtn2" type="button">حفظ العرض PDF</button>
+            <button class="ghost-btn" id="restartBtn" type="button">العودة للبداية</button>
+          </div>
+          <p class="thanks">شكراً لوقتك 🌿</p>
+        </div>
+      </section>
+
+    </main>
+
+    <div class="counter" aria-live="polite" aria-atomic="true">
+      <span id="currentSlide">01</span><span class="counter-sep">/</span><span id="totalSlides">12</span>
+    </div>
+
+    <nav class="controls" dir="ltr" aria-label="التنقل بين الشرائح">
+      <button class="nav-btn nav-btn--next" id="nextBtn" type="button" aria-label="الشريحة التالية">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>التالي</span>
+      </button>
+      <button class="nav-btn" id="prevBtn" type="button" aria-label="الشريحة السابقة">
+        <span>السابق</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </nav>
+
+    <p class="hint">← التالي &nbsp;·&nbsp; → السابق &nbsp;·&nbsp; مسافة للتقدّم</p>
+
+    <div class="progress" role="progressbar" aria-label="تقدّم العرض" aria-valuemin="1" aria-valuemax="12" aria-valuenow="1" id="progress">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <script src="slides.js"></script>
+</body>
+</html>

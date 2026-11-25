@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" fill="none">
+  <defs>
+    <linearGradient id="top" x1="250" y1="120" x2="650" y2="350" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D7E0D9"/><stop offset="1" stop-color="#828C85"/>
+    </linearGradient>
+    <linearGradient id="left" x1="250" y1="235" x2="450" y2="570" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A0AAA3"/><stop offset="1" stop-color="#434B46"/>
+    </linearGradient>
+    <linearGradient id="right" x1="650" y1="235" x2="450" y2="570" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#CBD6CE"/><stop offset="1" stop-color="#66716A"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(450 350) rotate(90) scale(320 420)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C9D4CC" stop-opacity=".5"/><stop offset="1" stop-color="#838884" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+
+  <ellipse cx="450" cy="370" rx="380" ry="300" fill="url(#glow)"/>
+  <ellipse cx="450" cy="585" rx="265" ry="42" fill="#000" opacity=".35" filter="url(#soft)"/>
+
+  <g opacity=".55" stroke="#A9B3AD" stroke-width="1.5">
+    <ellipse cx="450" cy="345" rx="330" ry="120" stroke-dasharray="6 12"/>
+    <ellipse cx="450" cy="345" rx="330" ry="120" transform="rotate(34 450 345)" opacity=".45"/>
+  </g>
+
+  <g font-family="Consolas, ui-monospace, monospace" font-size="42" font-weight="700" text-anchor="middle">
+    <path d="M250 235 450 120 650 235 450 350Z" fill="url(#top)"/>
+    <path d="M250 235 450 350 450 570 250 455Z" fill="url(#left)"/>
+    <path d="M650 235 450 350 450 570 650 455Z" fill="url(#right)"/>
+    <path d="M250 235 450 120 650 235 450 350Z M250 235V455L450 570 650 455V235" stroke="#EFF5F0" stroke-opacity=".7" stroke-width="2"/>
+    <path d="M450 350V570" stroke="#EFF5F0" stroke-opacity=".5" stroke-width="2"/>
+    <text x="350" y="410" fill="#FFFFFF" opacity=".98">&lt;/&gt;</text>
+    <text x="550" y="410" fill="#F3F7F4">{ }</text>
+    <text x="450" y="255" fill="#2C332F" opacity=".8">01</text>
+  </g>
+
+  <g opacity=".9">
+    <path d="M120 250 178 219 236 250 178 281Z" fill="#9DA8A1" fill-opacity=".85"/>
+    <path d="M120 250V312L178 344 236 312V250" fill="#5E6862" fill-opacity=".9"/>
+    <path d="M178 281V344L236 312V250" fill="#838884"/>
+    <path d="M690 430 736 404 782 430 736 456Z" fill="#9DA8A1" fill-opacity=".8"/>
+    <path d="M690 430V482L736 508 782 482V430" fill="#5E6862" fill-opacity=".85"/>
+    <path d="M736 456V508L782 482V430" fill="#838884"/>
+  </g>
+
+  <g fill="#C6D0C9">
+    <circle cx="150" cy="130" r="5"/><circle cx="760" cy="160" r="7"/>
+    <circle cx="810" cy="530" r="4"/><circle cx="105" cy="500" r="6"/>
+    <circle cx="450" cy="55" r="4"/><circle cx="620" cy="640" r="5"/>
+  </g>
+  <g stroke="#838884" stroke-width="2" opacity=".7">
+    <path d="M150 130h52M760 160h-40M810 530h-46M105 500h44"/>
+  </g>
+</svg>

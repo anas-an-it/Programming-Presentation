@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" fill="none">
+  <defs>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#D9E3DB"/><stop offset="1" stop-color="#7C8880" stop-opacity=".95"/>
+    </linearGradient>
+    <linearGradient id="face" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#A7B2AA"/><stop offset="1" stop-color="#4B544E"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientTransform="translate(450 310) rotate(90) scale(280 420)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C9D4CC" stop-opacity=".35"/><stop offset="1" stop-color="#838884" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <ellipse cx="450" cy="310" rx="420" ry="290" fill="url(#halo)"/>
+  <g opacity=".5" stroke="#A9B3AD" stroke-width="1.5" stroke-dasharray="5 10">
+    <ellipse cx="450" cy="330" rx="360" ry="110"/>
+  </g>
+
+  <!-- browser window -->
+  <g transform="translate(120 130)">
+    <path d="M0 40 210 0 360 62 150 108Z" fill="url(#glass)"/>
+    <path d="M0 40V250L150 310 360 250V62" fill="url(#face)"/>
+    <path d="M150 108V310L360 250V62" fill="#7E8A82"/>
+    <path d="M0 40 210 0 360 62 150 108Z M0 40V250L150 310 360 250V62 M150 108V310" stroke="#EFF5F0" stroke-opacity=".6" stroke-width="2"/>
+    <circle cx="34" cy="53" r="5" fill="#E7EDE8"/><circle cx="52" cy="49" r="5" fill="#E7EDE8" opacity=".7"/><circle cx="70" cy="45" r="5" fill="#E7EDE8" opacity=".45"/>
+    <path d="M188 117 300 86 300 130 188 161Z" fill="#131816" opacity=".75"/>
+    <path d="M188 168 300 137 300 148 188 179Z" fill="#C9D2CB" opacity=".55"/>
+    <path d="M188 188 268 165 268 176 188 199Z" fill="#C9D2CB" opacity=".35"/>
+  </g>
+
+  <!-- phone -->
+  <g transform="translate(370 90) rotate(-6)">
+    <rect x="0" y="0" width="150" height="290" rx="24" fill="#2B322E" stroke="#B9C4BC" stroke-opacity=".5" stroke-width="3"/>
+    <rect x="10" y="16" width="130" height="252" rx="16" fill="#121816"/>
+    <rect x="55" y="6" width="40" height="6" rx="3" fill="#838884"/>
+    <circle cx="75" cy="285" r="9" stroke="#838884" stroke-width="2"/>
+    <g fill="#838884">
+      <rect x="22" y="32" width="46" height="46" rx="10" opacity=".95"/>
+      <rect x="82" y="32" width="46" height="46" rx="10" opacity=".6"/>
+      <rect x="22" y="90" width="46" height="46" rx="10" opacity=".6"/>
+      <rect x="82" y="90" width="46" height="46" rx="10" opacity=".95"/>
+      <rect x="22" y="148" width="106" height="16" rx="8" opacity=".5"/>
+      <rect x="22" y="176" width="80" height="12" rx="6" opacity=".35"/>
+    </g>
+  </g>
+
+  <!-- AI chip -->
+  <g transform="translate(600 215)">
+    <path d="M0 60 90 15 180 60 90 105Z" fill="url(#glass)"/>
+    <path d="M0 60V150L90 195 180 150V60" fill="url(#face)"/>
+    <path d="M90 105V195L180 150V60" fill="#7E8A82"/>
+    <path d="M0 60 90 15 180 60 90 105Z M0 60V150L90 195 180 150V60 M90 105V195" stroke="#EFF5F0" stroke-opacity=".65" stroke-width="2"/>
+    <path d="M90 72 132 93 90 114 48 93Z" fill="#DCE5DE" opacity=".85"/>
+    <g stroke="#C9D2CB" stroke-width="3" opacity=".7">
+      <path d="M18 105v34M48 121v34M132 121v34M162 105v34"/>
+    </g>
+  </g>
+
+  <!-- gamepad -->
+  <g transform="translate(615 420)">
+    <path d="M0 30 34 12 110 40 76 60Z" fill="#AAB5AD"/>
+    <path d="M0 30V72L76 102 110 72V40" fill="#59625C"/>
+    <path d="M76 60V102L110 72V40" fill="#838884"/>
+    <path d="M0 30 34 12 110 40 76 60Z M0 30V72L76 102 110 72V40 M76 60V102" stroke="#DCE4DE" stroke-opacity=".4" stroke-width="2"/>
+    <circle cx="30" cy="60" r="7" fill="#E4EAE5"/><circle cx="48" cy="68" r="7" fill="#E4EAE5" opacity=".7"/>
+  </g>
+
+  <g fill="#C6D0C9" opacity=".9">
+    <circle cx="80" cy="90" r="4"/><circle cx="830" cy="120" r="5"/>
+    <circle cx="840" cy="470" r="4"/><circle cx="120" cy="520" r="5"/>
+  </g>
+</svg>

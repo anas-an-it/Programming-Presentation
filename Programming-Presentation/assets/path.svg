@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" fill="none">
+  <defs>
+    <linearGradient id="stepTop" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#DCE5DE"/><stop offset="1" stop-color="#9AA59D"/></linearGradient>
+    <linearGradient id="stepFront" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#A6B0A8"/><stop offset="1" stop-color="#4D564F"/></linearGradient>
+    <radialGradient id="pbg" cx="0" cy="0" r="1" gradientTransform="translate(400 260) rotate(90) scale(260 400)" gradientUnits="userSpaceOnUse"><stop stop-color="#C9D4CC" stop-opacity=".3"/><stop offset="1" stop-color="#838884" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse cx="400" cy="260" rx="380" ry="250" fill="url(#pbg)"/>
+
+  <g stroke="#D8E2DA" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="6 10">
+    <path d="M40 430C180 430 180 340 320 340S480 220 620 220 720 150 780 130"/>
+  </g>
+
+  <g font-family="Consolas, ui-monospace, monospace" font-size="22" font-weight="700" text-anchor="middle">
+    <!-- step 1 -->
+    <path d="M60 390 160 360 230 385 130 415Z" fill="url(#stepTop)"/>
+    <path d="M60 390V425L130 452 230 420V385" fill="url(#stepFront)"/>
+    <path d="M130 415V452L230 420V385" fill="#7E8A82"/>
+    <text x="145" y="425" fill="#F1F5F2">1</text>
+    <!-- step 2 -->
+    <path d="M220 310 320 280 390 305 290 335Z" fill="url(#stepTop)"/>
+    <path d="M220 310V345L290 372 390 340V305" fill="url(#stepFront)"/>
+    <path d="M290 335V372L390 340V305" fill="#7E8A82"/>
+    <text x="305" y="345" fill="#F1F5F2">2</text>
+    <!-- step 3 -->
+    <path d="M380 230 480 200 550 225 450 255Z" fill="url(#stepTop)"/>
+    <path d="M380 230V265L450 292 550 260V225" fill="url(#stepFront)"/>
+    <path d="M450 255V292L550 260V225" fill="#7E8A82"/>
+    <text x="465" y="265" fill="#F1F5F2">3</text>
+    <!-- step 4 -->
+    <path d="M540 150 640 120 710 145 610 175Z" fill="url(#stepTop)"/>
+    <path d="M540 150V185L610 212 710 180V145" fill="url(#stepFront)"/>
+    <path d="M610 175V212L710 180V145" fill="#7E8A82"/>
+    <text x="625" y="185" fill="#F1F5F2">4</text>
+  </g>
+
+  <g stroke="#D4DDD6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".8">
+    <path d="M200 330l20-12-2 22M360 250l20-12-2 22M520 170l20-12-2 22"/>
+  </g>
+  <g fill="#E2E9E3">
+    <circle cx="80" cy="100" r="5"/><circle cx="730" cy="420" r="6"/><circle cx="420" cy="60" r="4"/>
+  </g>
+</svg>
