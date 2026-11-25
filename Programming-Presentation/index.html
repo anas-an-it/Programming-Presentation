@@ -5,7 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="عرض تقديمي مبسّط عن البرمجة من الفكرة الأولى إلى أول سطر كود.">
   <title>البرمجة | عرض تقديمي</title>
-  <link rel="stylesheet" href="style.css?v=17">
+  <script>
+    // Cache-busting: always load the latest CSS/JS, even if Chrome kept an old copy.
+    window.__assetVersion = Date.now();
+    var styleLink = document.createElement("link");
+    styleLink.rel = "stylesheet";
+    styleLink.href = "style.css?v=" + window.__assetVersion;
+    document.head.appendChild(styleLink);
+  </script>
 </head>
 <body>
   <div class="deck" id="deck">
@@ -303,6 +310,10 @@
     </div>
   </div>
 
-  <script src="slides.js?v=17"></script>
+  <script>
+    var appScript = document.createElement("script");
+    appScript.src = "slides.js?v=" + window.__assetVersion;
+    document.body.appendChild(appScript);
+  </script>
 </body>
 </html>
