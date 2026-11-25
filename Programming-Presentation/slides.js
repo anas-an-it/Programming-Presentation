@@ -308,27 +308,32 @@
       return;
     }
 
-    // Two curated options: the calm female voice and a matching calm male voice.
+    // Two curated options: a calm female voice and a clear, natural-sounding male voice.
     const arabic = voices.filter((voice) => /^ar/i.test(voice.lang));
-    const femaleNames = /hoda|zira|hazel|susan|jenny|aria|amana|salma|sali|sara|farida|mona|layla|laila|noura|female|woman|هدى|سلمى|ليلى|نورة/i;
-    const maleNames = /naayf|nayef|naif|maged|majid|majeed|mansour|mansoor|fateen|omar|kareem|karim|ahmed|hussein|david|mark|george|male|man|نايف|ماجد|منصور/i;
-    const naturalFirst = (a, b) =>
-      Number(/natural|neural|online/i.test(b.name)) - Number(/natural|neural|online/i.test(a.name)) ||
-      a.name.localeCompare(b.name);
-    const females = arabic.filter((voice) => femaleNames.test(voice.name)).sort(naturalFirst);
-    const males = arabic.filter((voice) => maleNames.test(voice.name)).sort(naturalFirst);
+    const femaleNames = /hoda|zira|zariyah|hazel|susan|jenny|aria|amana|salma|sali|sara|farida|mona|layla|laila|noura|fatima|female|woman|هدى|سلمى|ليلى|نورة|فاطمة/i;
+    const maleNames = /naayf|nayef|naif|maged|majid|majeed|mansour|mansoor|fateen|omar|kareem|karim|ahmed|hussein|hamed|hamid|shakir|hamdan|zahariyy|ayaan|david|mark|george|male|man|نايف|ماجد|منصور|حامد|شاكر/i;
+    const naturalVoice = (voice) => /neural|natural|online|hamed|hamid|shakir|hamdan|zahariyy|ayaan/i.test(voice.name);
+    const byQuality = (a, b) =>
+      Number(naturalVoice(b)) - Number(naturalVoice(a)) || a.name.localeCompare(b.name);
+    const females = arabic.filter((voice) => femaleNames.test(voice.name)).sort(byQuality);
+    const namedMales = arabic.filter((voice) => maleNames.test(voice.name)).sort(byQuality);
+    const naturalMale = arabic
+      .filter((voice) => !femaleNames.test(voice.name) && naturalVoice(voice))
+      .sort(byQuality)[0];
+    const maleVoice = naturalMale || namedMales[0] || null;
     const fallback = arabic[0] || voices[0];
-    const maleVoice = males[0] || arabic.find((voice) => !femaleNames.test(voice.name)) || null;
+    const isNatural = (voice) => !!voice && naturalVoice(voice);
 
     voicePresets = [
       { label: "نسائي · هادئ", voice: females[0] || fallback, rate: 0.94, pitch: 1.02 },
       {
-        label: "صوت رجل · عميق",
-        voice: maleVoice || females[0] || fallback,
-        rate: 0.88,
-        pitch: maleVoice ? 0.85 : 0.6
+        label: "صوت رجل · واضح",
+        voice: maleVoice || fallback,
+        rate: isNatural(maleVoice) ? 1 : 0.96,
+        pitch: maleVoice ? (isNatural(maleVoice) ? 1 : 0.94) : 0.85
       }
     ];
+    if (selectedPresetIndex !== null && selectedPresetIndex >= voicePresets.length) selectedPresetIndex = 0;
 
     voicePresets.forEach((preset, index) => {
       const row = document.createElement("div");
@@ -341,7 +346,9 @@
       const main = document.createElement("span");
       main.textContent = preset.label;
       const sub = document.createElement("small");
-      sub.textContent = preset.voice ? preset.voice.name + " · " + preset.voice.lang : "افتراضي";
+      sub.textContent = preset.voice
+        ? preset.voice.name + " · " + preset.voice.lang + (isNatural(preset.voice) ? " · طبيعي" : "")
+        : "افتراضي";
       select.append(main, sub);
       select.addEventListener("click", () => {
         selectedPresetIndex = index;
