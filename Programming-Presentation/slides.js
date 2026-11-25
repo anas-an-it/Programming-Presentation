@@ -339,12 +339,12 @@
     const isNatural = (voice) => !!voice && naturalVoice(voice);
 
     voicePresets = [
-      { label: "نسائي · هادئ", voice: femaleVoice, rate: 0.94, pitch: 1.02 },
+      { label: "نسائي · هادئ", voice: femaleVoice, rate: 0.96, pitch: 1 },
       {
-        label: hasDistinctMale ? "صوت رجل · واضح" : "صوت رجل · عميق",
+        label: "صوت رجل · واضح",
         voice: hasDistinctMale ? maleVoice : femaleVoice,
-        rate: hasDistinctMale ? (isNatural(maleVoice) ? 1 : 0.96) : 0.88,
-        pitch: hasDistinctMale ? (isNatural(maleVoice) ? 1 : 0.94) : 0.72
+        rate: 0.96,
+        pitch: 0.98
       }
     ];
     if (selectedPresetIndex !== null && selectedPresetIndex >= voicePresets.length) selectedPresetIndex = 0;
@@ -360,9 +360,8 @@
       const main = document.createElement("span");
       main.textContent = preset.label;
       const sub = document.createElement("small");
-      const sharedVoiceNote = index === 1 && !hasDistinctMale ? " · نبرة أعمق" : "";
       sub.textContent = preset.voice
-        ? preset.voice.name + " · " + preset.voice.lang + (isNatural(preset.voice) ? " · طبيعي" : "") + sharedVoiceNote
+        ? preset.voice.name + " · " + preset.voice.lang + (isNatural(preset.voice) ? " · طبيعي" : "")
         : "افتراضي";
       select.append(main, sub);
       select.addEventListener("click", () => {
