@@ -218,7 +218,17 @@
   const speech = "speechSynthesis" in window ? window.speechSynthesis : null;
   let utterance = null;
   let voicePresets = [];
-  let selectedPresetIndex = null;
+  const VOICE_STORAGE_KEY = "programming-presentation:voice-preset";
+  let selectedPresetIndex = (() => {
+    try {
+      const saved = window.localStorage && localStorage.getItem(VOICE_STORAGE_KEY);
+      if (!saved) return null;
+      const value = parseInt(saved, 10);
+      return Number.isInteger(value) && value >= 0 ? value : null;
+    } catch (error) {
+      return null;
+    }
+  })();
 
   function setReadingState(active) {
     readBtn.classList.toggle("is-speaking", active);
@@ -354,6 +364,11 @@
       select.append(main, sub);
       select.addEventListener("click", () => {
         selectedPresetIndex = index;
+        try {
+          if (window.localStorage) localStorage.setItem(VOICE_STORAGE_KEY, String(index));
+        } catch (error) {
+          // Storage can be unavailable in private mode; selection still works for this visit.
+        }
         renderVoices();
         closeVoicePicker();
       });
