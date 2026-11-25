@@ -14,7 +14,15 @@
   const nextBtn = document.getElementById("nextBtn");
   const pdfBtn = document.getElementById("pdfBtn");
   const pdfBtn2 = document.getElementById("pdfBtn2");
+  const readBtn = document.getElementById("readBtn");
+  const readLabel = readBtn.querySelector("span");
+  const voiceBtn = document.getElementById("voiceBtn");
+  const voicePicker = document.getElementById("voicePicker");
+  const voiceList = document.getElementById("voiceList");
   const restartBtn = document.getElementById("restartBtn");
+  const counterBtn = document.getElementById("counterBtn");
+  const numberPicker = document.getElementById("numberPicker");
+  const pickerGrid = document.getElementById("pickerGrid");
 
   const pad = (n) => String(n).padStart(2, "0");
   const clamp = (n) => Math.min(Math.max(n, 0), total - 1);
@@ -28,6 +36,7 @@
   let current = -1;
 
   function show(next, updateHash = true) {
+    if (typeof stopReading === "function") stopReading();
     const index = clamp(next);
     if (index === current) return;
 
@@ -40,11 +49,18 @@
 
     current = index;
     currentEl.textContent = pad(index + 1);
+    pickerGrid.querySelectorAll(".picker-btn").forEach((btn, i) => {
+      btn.classList.toggle("is-current", i === index);
+      if (i === index) btn.setAttribute("aria-current", "true");
+      else btn.removeAttribute("aria-current");
+    });
     progressFill.style.width = ((index + 1) / total) * 100 + "%";
     progress.setAttribute("aria-valuenow", String(index + 1));
     prevBtn.disabled = index === 0;
     nextBtn.disabled = index === total - 1;
-    document.title = "البرمجة | " + (slides[index].dataset.title || pad(index + 1));
+    const title = slides[index].dataset.title || pad(index + 1);
+    document.title = "البرمجة | " + title;
+    document.getElementById("currentTitle").textContent = title;
 
     if (updateHash) {
       history.replaceState(null, "", "#slide-" + (index + 1));
@@ -54,6 +70,39 @@
   function go(step) {
     show(current + step);
   }
+
+  slides.forEach((slide, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "picker-btn";
+    btn.textContent = pad(i + 1);
+    btn.title = slide.dataset.title || pad(i + 1);
+    btn.addEventListener("click", () => {
+      show(i);
+      closePicker();
+    });
+    pickerGrid.appendChild(btn);
+  });
+
+  function closePicker(restoreFocus = false) {
+    if (numberPicker.hidden) return;
+    numberPicker.hidden = true;
+    counterBtn.setAttribute("aria-expanded", "false");
+    if (restoreFocus) counterBtn.focus();
+  }
+
+  counterBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const willOpen = numberPicker.hidden;
+    numberPicker.hidden = !willOpen;
+    counterBtn.setAttribute("aria-expanded", String(willOpen));
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!numberPicker.hidden && !numberPicker.contains(event.target) && event.target !== counterBtn) {
+      closePicker();
+    }
+  });
 
   nextBtn.addEventListener("click", () => go(1));
   prevBtn.addEventListener("click", () => go(-1));
@@ -66,7 +115,21 @@
     if (event.altKey || event.ctrlKey || event.metaKey) return;
     const onButton = event.target && event.target.tagName === "BUTTON";
 
+    if (/^[0-9]$/.test(event.key)) {
+      const target = event.key === "0" ? 10 : Number(event.key);
+      if (target <= total) {
+        event.preventDefault();
+        show(target - 1);
+        closePicker();
+        return;
+      }
+    }
+
     switch (event.key) {
+      case "Escape":
+        closePicker(true);
+        closeVoicePicker(true);
+        break;
       case "ArrowLeft":
       case "PageDown":
         event.preventDefault();
@@ -118,6 +181,216 @@
     }
     touchStart = null;
   }, { passive: true });
+
+  // Pointer-driven 3D tilt for the elements marked with data-tilt
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (canHover && !reduceMotion) {
+    document.querySelectorAll("[data-tilt]").forEach((el) => {
+      const max = parseFloat(el.dataset.tilt) || 8;
+      let frame = 0;
+
+      el.addEventListener("pointermove", (event) => {
+        if (event.pointerType === "touch") return;
+        const rect = el.getBoundingClientRect();
+        const px = (event.clientX - rect.left) / rect.width - 0.5;
+        const py = (event.clientY - rect.top) / rect.height - 0.5;
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          el.style.setProperty("--ry", (px * 2 * max).toFixed(2) + "deg");
+          el.style.setProperty("--rx", (-py * 2 * max).toFixed(2) + "deg");
+        });
+      });
+
+      const reset = () => {
+        cancelAnimationFrame(frame);
+        el.style.setProperty("--rx", "0deg");
+        el.style.setProperty("--ry", "0deg");
+      };
+      el.addEventListener("pointerleave", reset);
+      el.addEventListener("pointercancel", reset);
+    });
+  }
+
+  // Read the current slide aloud using the browser's speech engine
+  const speech = "speechSynthesis" in window ? window.speechSynthesis : null;
+  let utterance = null;
+  let voicePresets = [];
+  let selectedPresetIndex = null;
+
+  function setReadingState(active) {
+    readBtn.classList.toggle("is-speaking", active);
+    readBtn.setAttribute("aria-pressed", String(active));
+    readLabel.textContent = active ? "إيقاف" : "اقرأ";
+    readBtn.title = active ? "إيقاف القراءة" : "اقرأ الشريحة الحالية بصوت عالٍ";
+  }
+
+  function stopReading() {
+    if (!speech) return;
+    speech.cancel();
+    utterance = null;
+    setReadingState(false);
+  }
+
+  function readSlide() {
+    if (!speech) {
+      readBtn.disabled = true;
+      readBtn.title = "القراءة غير مدعومة في هذا المتصفح";
+      return;
+    }
+    if (utterance || speech.speaking) {
+      stopReading();
+      return;
+    }
+
+    const source = slides[current] && slides[current].querySelector(".slide-inner");
+    if (!source) return;
+    const clone = source.cloneNode(true);
+    clone.querySelectorAll(".code, button, svg, .mini-3d, .end-3d, .step-num, .lang-badge").forEach((node) => node.remove());
+    const parts = Array.from(
+      clone.querySelectorAll("h1, h2, h3, p, .fact, .chips span, .fn-orbit span, .depth-card strong, .depth-card small, .journey-item strong")
+    )
+      .map((node) => node.textContent.replace(/\s+/g, " ").trim().replace(/[.!?؟]+$/, "").trim())
+      .filter(Boolean);
+    const text = parts.length ? parts.join(". ") + "." : "";
+    if (!text) return;
+
+    const preset = voicePresets[selectedPresetIndex] || voicePresets[0] || { voice: null, rate: 0.95, pitch: 1 };
+    utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = preset.voice ? preset.voice.lang : "ar-SA";
+    utterance.rate = preset.rate;
+    utterance.pitch = preset.pitch;
+    utterance.volume = 1;
+    if (preset.voice) utterance.voice = preset.voice;
+    utterance.onend = utterance.onerror = () => {
+      utterance = null;
+      setReadingState(false);
+    };
+
+    speech.cancel();
+    speech.speak(utterance);
+    setReadingState(true);
+  }
+
+  readBtn.addEventListener("click", readSlide);
+
+  const sampleText = "مرحباً، هذه تجربة صوت القراءة. البرمجة تجعل الأفكار حقيقة.";
+
+  function playVoice(preset, button) {
+    if (!speech) return;
+    speech.cancel();
+    setReadingState(false);
+    voiceList.querySelectorAll(".voice-play").forEach((b) => b.classList.remove("is-playing"));
+    if (button) button.classList.add("is-playing");
+
+    const preview = new SpeechSynthesisUtterance(sampleText);
+    preview.lang = preset.voice ? preset.voice.lang : "ar-SA";
+    if (preset.voice) preview.voice = preset.voice;
+    preview.rate = preset.rate;
+    preview.pitch = preset.pitch;
+    preview.onend = preview.onerror = () => {
+      if (button) button.classList.remove("is-playing");
+    };
+    speech.speak(preview);
+  }
+
+  function renderVoices() {
+    if (!speech) return;
+    voiceList.innerHTML = "";
+
+    const voices = speech.getVoices();
+    if (!voices.length) {
+      voicePresets = [];
+      const empty = document.createElement("p");
+      empty.className = "voice-empty";
+      empty.textContent = "لا توجد أصوات متاحة في هذا المتصفح حالياً.";
+      voiceList.appendChild(empty);
+      return;
+    }
+
+    // Two curated options: the calm female voice and a matching calm male voice.
+    const arabic = voices.filter((voice) => /^ar/i.test(voice.lang));
+    const femaleNames = /hoda|zira|hazel|susan|jenny|aria|amana|salma|sali|sara|farida|mona|layla|laila|noura|female|woman|هدى|سلمى|ليلى|نورة/i;
+    const maleNames = /naayf|nayef|naif|maged|majid|majeed|mansour|mansoor|fateen|omar|kareem|karim|ahmed|hussein|david|mark|george|male|man|نايف|ماجد|منصور/i;
+    const naturalFirst = (a, b) =>
+      Number(/natural|neural|online/i.test(b.name)) - Number(/natural|neural|online/i.test(a.name)) ||
+      a.name.localeCompare(b.name);
+    const females = arabic.filter((voice) => femaleNames.test(voice.name)).sort(naturalFirst);
+    const males = arabic.filter((voice) => maleNames.test(voice.name)).sort(naturalFirst);
+    const fallback = arabic[0] || voices[0];
+    const maleVoice = males[0] || arabic.find((voice) => !femaleNames.test(voice.name)) || null;
+
+    voicePresets = [
+      { label: "نسائي · هادئ", voice: females[0] || fallback, rate: 0.94, pitch: 1.02 },
+      {
+        label: "صوت رجل · عميق",
+        voice: maleVoice || females[0] || fallback,
+        rate: 0.88,
+        pitch: maleVoice ? 0.85 : 0.6
+      }
+    ];
+
+    voicePresets.forEach((preset, index) => {
+      const row = document.createElement("div");
+      row.className = "voice-row";
+
+      const select = document.createElement("button");
+      select.type = "button";
+      select.className = "voice-select";
+      if (selectedPresetIndex === index) select.classList.add("is-selected");
+      const main = document.createElement("span");
+      main.textContent = preset.label;
+      const sub = document.createElement("small");
+      sub.textContent = preset.voice ? preset.voice.name + " · " + preset.voice.lang : "افتراضي";
+      select.append(main, sub);
+      select.addEventListener("click", () => {
+        selectedPresetIndex = index;
+        renderVoices();
+        closeVoicePicker();
+      });
+
+      const play = document.createElement("button");
+      play.type = "button";
+      play.className = "voice-play";
+      play.textContent = "▶";
+      play.title = "استمع إلى " + preset.label;
+      play.addEventListener("click", () => playVoice(preset, play));
+
+      row.append(select, play);
+      voiceList.appendChild(row);
+    });
+  }
+
+  function closeVoicePicker(restoreFocus = false) {
+    if (voicePicker.hidden) return;
+    voicePicker.hidden = true;
+    voiceBtn.setAttribute("aria-expanded", "false");
+    if (restoreFocus) voiceBtn.focus();
+  }
+
+  voiceBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const willOpen = voicePicker.hidden;
+    voicePicker.hidden = !willOpen;
+    voiceBtn.setAttribute("aria-expanded", String(willOpen));
+    if (willOpen) renderVoices();
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!voicePicker.hidden && !voicePicker.contains(event.target) && event.target !== voiceBtn) {
+      closeVoicePicker();
+    }
+  });
+
+  if (speech) {
+    renderVoices();
+    speech.addEventListener("voiceschanged", renderVoices);
+  } else {
+    voiceBtn.disabled = true;
+    voiceBtn.title = "اختيار الصوت غير مدعوم في هذا المتصفح";
+  }
+
+  window.addEventListener("beforeunload", () => speech && speech.cancel());
 
   function saveAsPdf() {
     document.body.classList.add("is-printing");
