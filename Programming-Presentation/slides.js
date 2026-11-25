@@ -48,6 +48,8 @@
     });
 
     current = index;
+    document.body.classList.toggle("no-reader", index === total - 1);
+    if (index === total - 1 && typeof closeVoicePicker === "function") closeVoicePicker();
     currentEl.textContent = pad(index + 1);
     pickerGrid.querySelectorAll(".picker-btn").forEach((btn, i) => {
       btn.classList.toggle("is-current", i === index);
